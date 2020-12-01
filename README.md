@@ -1,1 +1,1 @@
-# -Golang_test
+# Golang 練習用專案
