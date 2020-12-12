@@ -1,22 +1,23 @@
-package db
+package original_database
 
 import (
+	db "Golang_test/src/db"
 	"encoding/json"
 )
 
-type original_stock_day struct {
+type originalStockDay struct {
 	//tableName struct{} `sql:"original.original_stock_day"`
-	tableName  struct{} `sql:"original_stock_day"`
-	stock_no   string   `sql:",pk"`
-	stock_date string
-	//stock_json_data map[string]interface{}
+	tableName       struct{} `sql:"original_stock_day"`
+	stock_no        string   `sql:",pk"`
+	stock_date      string
+	stock_json_data map[string]interface{}
 }
 
-func StockDayInsert(stockNo string, date string, stock_json_data string) string {
-	db := GetConnect()
-	defer db.Close()
+func InsertStockDay(stockNo string, date string, stockJsonData string) string {
+	conn := db.GetConnect()
+	defer conn.Close()
 	var aaa map[string]interface{}
-	json.Unmarshal([]byte(stock_json_data), &aaa)
+	json.Unmarshal([]byte(stockJsonData), &aaa)
 
 	//_, err := db.Model(&original_stock_day{
 	//	stock_no:   stockNo,
@@ -30,7 +31,7 @@ func StockDayInsert(stockNo string, date string, stock_json_data string) string 
 	//	//stock_json_data: aaa,
 	//}
 
-	_, err := db.Exec(`
+	_, err := conn.Exec(`
 		INSERT INTO original.original_stock_day (stock_no, stock_date,stock_json_data) VALUES (?, ?,?)
 	`, stockNo, date, aaa)
 
@@ -45,3 +46,10 @@ func StockDayInsert(stockNo string, date string, stock_json_data string) string 
 	}
 	return ""
 }
+
+//func SelectStockDay(stockNo string, date string) string {
+//	conn := db.GetConnect()
+//	defer conn.Close()
+//
+//	return ""
+//}
