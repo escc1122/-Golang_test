@@ -47,9 +47,9 @@ func InsertStockDay(stockNo string, date string, stockJsonData string) string {
 	return ""
 }
 
-//func SelectStockDay(stockNo string, date string) string {
-//	conn := db.GetConnect()
-//	defer conn.Close()
-//
-//	return ""
-//}
+func SelectStockDayForLastDate(stockNo string, date string) string {
+	conn := db.GetConnect()
+	defer conn.Close()
+
+	return ""
+}
