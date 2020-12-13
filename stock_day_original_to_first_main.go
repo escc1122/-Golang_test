@@ -1,9 +1,8 @@
 package main
 
 import (
-	serviceDataCollection "Golang_test/src/service/data_collection"
+	"Golang_test/src/service/convert"
 	"strconv"
-	"time"
 )
 
 func main() {
@@ -13,7 +12,6 @@ func main() {
 		if len(mon) == 1 {
 			mon = "0" + mon
 		}
-		serviceDataCollection.StockDayWebToOriginal("2330", "2020"+mon+"01", "2020"+mon+"01")
-		time.Sleep(time.Duration(2) * time.Second)
+		convert.StockDayOriginalToFirst("2330", "2020"+mon)
 	}
 }

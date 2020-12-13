@@ -5,15 +5,16 @@ import (
 	"encoding/json"
 )
 
-type originalStockDay struct {
-	//tableName struct{} `sql:"original.original_stock_day"`
-	tableName       struct{} `sql:"original_stock_day"`
-	stock_no        string   `sql:",pk"`
-	stock_date      string
-	stock_json_data map[string]interface{}
+type OriginalStockDay struct {
+	tableName struct{} `sql:"original.original_stock_day"`
+	//tableName       struct{} `sql:"original_stock_day"`
+	Stock_no              string
+	Stock_date            string
+	Stock_date_year_month string
+	Stock_json_data       map[string]interface{}
 }
 
-func InsertStockDay(stockNo string, date string, stockJsonData string) string {
+func InsertStockDay(stockNo string, date string, stockDateYearMonth string, stockJsonData string) string {
 	conn := db.GetConnect()
 	defer conn.Close()
 	var aaa map[string]interface{}
@@ -32,8 +33,8 @@ func InsertStockDay(stockNo string, date string, stockJsonData string) string {
 	//}
 
 	_, err := conn.Exec(`
-		INSERT INTO original.original_stock_day (stock_no, stock_date,stock_json_data) VALUES (?, ?,?)
-	`, stockNo, date, aaa)
+		INSERT INTO original.original_stock_day (stock_no, stock_date,stock_json_data,stock_date_year_month) VALUES (?, ?,?,?)
+	`, stockNo, date, aaa, stockDateYearMonth)
 
 	//err := db.Select(&original_stock_day{
 	//	stock_no:   stockNo,
@@ -47,9 +48,18 @@ func InsertStockDay(stockNo string, date string, stockJsonData string) string {
 	return ""
 }
 
-func SelectStockDayForLastDate(stockNo string, date string) string {
+func SelectStockDayForLastDate(stockNo string, stockDateYearMonth string) []OriginalStockDay {
 	conn := db.GetConnect()
 	defer conn.Close()
 
-	return ""
+	var originalStockDays []OriginalStockDay
+
+	err := conn.Model(&originalStockDays).Where("stock_no=? and stock_date_year_month=?", stockNo, stockDateYearMonth).Order("stock_date DESC").Limit(1).Select()
+	//return posts, err
+
+	if err != nil {
+		panic(err)
+	}
+
+	return originalStockDays
 }
