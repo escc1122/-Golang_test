@@ -52,7 +52,7 @@ func StockDayOriginalToFirst(stockNo string, stockDateYearMonth string) {
 			volume, _ := strconv.ParseFloat(strings.Replace(e[Volume], ",", "", -1), 64)
 			firstCollationStockDay := firstDatabase.FirstCollationStockDay{
 				Stock_no:   stock_no,
-				Stock_date: e[StockDate],
+				Stock_date: strings.Replace(e[StockDate], "/", "", -1),
 				Open:       open,
 				High:       high,
 				Low:        low,

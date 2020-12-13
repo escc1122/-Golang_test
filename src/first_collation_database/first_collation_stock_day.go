@@ -35,3 +35,11 @@ func InsertFirstCollationStockDay(firstCollationStockDays []FirstCollationStockD
 	}
 	return ""
 }
+
+func GetAllFirstCollationStockDay(Stock_no string) []FirstCollationStockDay {
+	conn := db.GetConnect()
+	defer conn.Close()
+	var firstCollationStockDays []FirstCollationStockDay
+	conn.Model(&firstCollationStockDays).Where("stock_no=?", Stock_no).Select()
+	return firstCollationStockDays
+}
