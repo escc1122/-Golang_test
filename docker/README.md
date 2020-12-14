@@ -1,3 +1,6 @@
+# 專案所需格式
+dump_go_project
+
 # windows更換docker位置
 https://github.com/docker/for-win/issues/7348
 
