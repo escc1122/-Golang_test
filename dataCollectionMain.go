@@ -13,7 +13,7 @@ func main() {
 		if len(mon) == 1 {
 			mon = "0" + mon
 		}
-		serviceDataCollection.StockDayWebToOriginal("2330", "2020"+mon+"01", "2020"+mon+"01")
+		serviceDataCollection.StockDayWebToOriginal("2330", "2020"+mon+"01", "2020"+mon)
 		time.Sleep(time.Duration(2) * time.Second)
 	}
 }
